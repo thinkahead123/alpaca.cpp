@@ -10,6 +10,11 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <stdlib.h>
+#include <stdio.h>
+#include <locale.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 
 #if defined (__unix__) || (defined (__APPLE__) && defined (__MACH__))
 #include <signal.h>
@@ -791,6 +796,33 @@ const char * llama_print_system_info(void) {
     return s.c_str();
 }
 
+int baidu_fanyi(char *buf, int buflen, char *dstbuf, int dstbuf_sz)
+{
+    char order[] = "/usr/local/bin/python3 ./fanyi.py";
+    char comm[4096] = ""; snprintf(comm, sizeof(comm), "%s \"%s\"", order, buf);
+    FILE *pipe = popen(comm, "r");
+
+    assert(pipe);
+    int nread = fread(dstbuf, 1, dstbuf_sz, pipe);
+    return nread;
+}
+
+static char result_string[2048] = "";
+
+int collect_result(const char *string)
+{
+    int ncol = 0;
+
+    if (string == NULL) {
+        result_string[0] = 0;
+        return 0;
+    }
+
+    snprintf(result_string, sizeof(result_string), "%s%s", result_string, string);
+
+    return strlen(string);
+}
+
 int main(int argc, char ** argv) {
     ggml_time_init();
     const int64_t t_main_start_us = ggml_time_us();
@@ -1016,6 +1048,7 @@ int main(int argc, char ** argv) {
         if (!input_noecho) {
             for (auto id : embd) {
                 printf("%s", vocab.id_to_token[id].c_str());
+                collect_result(vocab.id_to_token[id].c_str());
             }
             fflush(stdout);
         }
@@ -1041,14 +1074,14 @@ int main(int argc, char ** argv) {
                 bool another_line=true;
                 while (another_line) {
                     fflush(stdout);
-                    char buf[256] = {0};
-                    int n_read;
+                    char *buf = NULL;
+                    int n_read = 0;
                     if(params.use_color) printf(ANSI_BOLD ANSI_COLOR_GREEN);
-                    if (scanf("%255[^\n]%n%*c", buf, &n_read) <= 0) {
-                        // presumable empty line, consume the newline
-                        if (scanf("%*c") <= 0) { /*ignore*/ }
-                        n_read=0;
-                    }
+
+                    buf = readline(NULL);
+                    if (!buf) n_read = 0;
+                    else n_read = strlen(buf);
+
                     if(params.use_color) printf(ANSI_COLOR_RESET);
 
                     if (n_read > 0 && buf[n_read-1]=='\\') {
@@ -1060,8 +1093,13 @@ int main(int argc, char ** argv) {
                         buf[n_read] = '\n';
                         buf[n_read+1] = 0;
                     }
+                    char chbuf[1024] = "";
+                    int nfy = baidu_fanyi(buf, n_read, chbuf, sizeof(chbuf));
+                    if (buf) {
+                        free(buf); buf = NULL;
+                    }
 
-                    std::vector<gpt_vocab::id> line_inp = ::llama_tokenize(vocab, buf, false);
+                    std::vector<gpt_vocab::id> line_inp = ::llama_tokenize(vocab, chbuf, false);
                     embd_inp.insert(embd_inp.end(), line_inp.begin(), line_inp.end());
                     embd_inp.insert(embd_inp.end(), response_inp.begin(), response_inp.end());
 
@@ -1076,8 +1114,13 @@ int main(int argc, char ** argv) {
 
         // end of text token
         if (embd.back() == 2) {
+            char chbuf[2048] = "";
             if (params.interactive) {
                 is_interacting = true;
+                int nfy = baidu_fanyi(result_string, strlen(result_string), chbuf, sizeof(chbuf));
+                printf("\n");
+                printf("%s", chbuf);
+                collect_result(NULL);
                 continue;
             } else {
                 printf("\n");
