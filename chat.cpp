@@ -33,6 +33,9 @@
 #define ANSI_COLOR_RESET   "\x1b[0m"
 #define ANSI_BOLD          "\x1b[1m"
 
+#define QUE_CHBUF_SZ	1024
+#define ANS_CHBUF_SZ	2048
+
 // determine number of model parts based on the dimension
 static const std::map<int, int> LLAMA_N_PARTS = {
     { 4096, 1 },
@@ -796,9 +799,9 @@ const char * llama_print_system_info(void) {
     return s.c_str();
 }
 
-int baidu_fanyi(char *buf, int buflen, char *dstbuf, int dstbuf_sz)
+int baidu_trans(char *buf, int buflen, char *dstbuf, int dstbuf_sz)
 {
-    char order[] = "/usr/local/bin/python3 ./fanyi.py";
+    char order[] = "python3 ./baidu_trans.py";
     char comm[4096] = ""; snprintf(comm, sizeof(comm), "%s \"%s\"", order, buf);
     FILE *pipe = popen(comm, "r");
 
@@ -1068,7 +1071,7 @@ int main(int argc, char ** argv) {
                 embd_inp.insert(embd_inp.end(), prompt_inp.begin(), prompt_inp.end());
                 
 
-                printf("\n> ");
+                //printf("\n> ");
 
                 // currently being interactive
                 bool another_line=true;
@@ -1076,11 +1079,19 @@ int main(int argc, char ** argv) {
                     fflush(stdout);
                     char *buf = NULL;
                     int n_read = 0;
+                    char prompt[64] = "";
                     if(params.use_color) printf(ANSI_BOLD ANSI_COLOR_GREEN);
 
-                    buf = readline(NULL);
+                    if (params.use_trans) strcpy(prompt, "alpaca-zh> ");
+                    else strcpy(prompt, "alpaca> ");
+
+                    buf = readline(prompt);
                     if (!buf) n_read = 0;
                     else n_read = strlen(buf);
+
+                    if (!n_read || !strcmp(buf, "exit") || !strcmp(buf, "quit")) {printf("Goodbye!\n"); exit(0);}
+                    if (!strcmp(buf, "trans")) {printf("Enter translation mode\n"); params.use_trans = true; continue;}
+                    if (!strcmp(buf, "notrans")) {printf("Leave translation mode\n"); params.use_trans = false; continue;}
 
                     if(params.use_color) printf(ANSI_COLOR_RESET);
 
@@ -1093,13 +1104,19 @@ int main(int argc, char ** argv) {
                         buf[n_read] = '\n';
                         buf[n_read+1] = 0;
                     }
-                    char chbuf[1024] = "";
-                    int nfy = baidu_fanyi(buf, n_read, chbuf, sizeof(chbuf));
+                    char qchbuf[QUE_CHBUF_SZ] = "";
+                    if (params.use_trans)
+                        baidu_trans(buf, n_read, qchbuf, QUE_CHBUF_SZ);
+                    else {
+                        strncpy(qchbuf, buf, QUE_CHBUF_SZ);
+                        qchbuf[QUE_CHBUF_SZ-1] = 0;
+                    }
+
                     if (buf) {
                         free(buf); buf = NULL;
                     }
 
-                    std::vector<gpt_vocab::id> line_inp = ::llama_tokenize(vocab, chbuf, false);
+                    std::vector<gpt_vocab::id> line_inp = ::llama_tokenize(vocab, qchbuf, false);
                     embd_inp.insert(embd_inp.end(), line_inp.begin(), line_inp.end());
                     embd_inp.insert(embd_inp.end(), response_inp.begin(), response_inp.end());
 
@@ -1114,12 +1131,16 @@ int main(int argc, char ** argv) {
 
         // end of text token
         if (embd.back() == 2) {
-            char chbuf[2048] = "";
+            char achbuf[ANS_CHBUF_SZ] = "";
             if (params.interactive) {
                 is_interacting = true;
-                int nfy = baidu_fanyi(result_string, strlen(result_string), chbuf, sizeof(chbuf));
-                printf("\n");
-                printf("%s", chbuf);
+                if (params.use_trans) {
+                    baidu_trans(result_string, strlen(result_string), achbuf, ANS_CHBUF_SZ);
+                    printf("\n");
+                    printf("%s", achbuf);
+                } else 
+                    printf("\n");
+                    
                 collect_result(NULL);
                 continue;
             } else {

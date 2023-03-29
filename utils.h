@@ -36,6 +36,7 @@ struct gpt_params {
     bool interactive = true; // interactive mode
     bool interactive_start = true; // reverse prompt immediately
     std::string antiprompt = ""; // string upon seeing which more user input is prompted
+    bool use_trans = true; // use baidu fanyi to translate from/to chinese
 };
 
 bool gpt_params_parse(int argc, char ** argv, gpt_params & params);

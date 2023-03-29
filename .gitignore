@@ -36,3 +36,6 @@ Release/
 CMakeFiles/
 CMakeCache.txt
 *.dir/
+
+*.my.*
+*.bak
