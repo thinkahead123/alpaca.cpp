@@ -26,9 +26,11 @@ The weights are based on the published fine-tunes from `alpaca-lora`, converted 
 
 
 ```sh
-git clone https://github.com/antimatter15/alpaca.cpp
+git clone https://github.com/thinkahead123/alpaca.cpp
 cd alpaca.cpp
 
+# if you use macbook pro M1, cp ./CMakefileLists.MBP_M1.txt ./CMakefileLists.txt
+cmake .
 make chat
 ./chat
 ```
