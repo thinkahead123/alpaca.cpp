@@ -93,7 +93,7 @@ void gpt_print_usage(int argc, char ** argv, const gpt_params & params) {
     fprintf(stderr, "  -r PROMPT, --reverse-prompt PROMPT\n");
     fprintf(stderr, "                        in interactive mode, poll user input upon seeing PROMPT\n");
     fprintf(stderr, "  --color               colorise output to distinguish prompt and user input from generations\n");
-    fprintf(stderr, "  --notrans             don't use baidu etc. to translate the user's intput and gpt's reply\n");
+    fprintf(stderr, "  --notrans             don't use baidu etc. to translate the user's intput and gpt's reply in Chinese\n");
     fprintf(stderr, "  -s SEED, --seed SEED  RNG seed (default: -1)\n");
     fprintf(stderr, "  -t N, --threads N     number of threads to use during computation (default: %d)\n", params.n_threads);
     fprintf(stderr, "  -p PROMPT, --prompt PROMPT\n");

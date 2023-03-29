@@ -1,12 +1,21 @@
-# Alpaca.cpp
+# Alpaca.cpp (Alpaca-zh, use baidu to translate from/to Chinese)
 
-Run a fast ChatGPT-like model locally on your device. The screencast below is not sped up and running on an M2 Macbook Air with 4GB of weights. 
+Run a fast ChatGPT-like model locally on your device. The screencast below is not sped up and running on an M1 Macbook Pro  with 4GB of weights. 
 
 
 [![asciicast](screencast.gif)](https://asciinema.org/a/dfJ8QXZ4u978Ona59LPEldtKK)
 
 
+From https://github.com/antimatter15/alpaca.cpp:
+====================
 This combines the [LLaMA foundation model](https://github.com/facebookresearch/llama) with an [open reproduction](https://github.com/tloen/alpaca-lora) of [Stanford Alpaca](https://github.com/tatsu-lab/stanford_alpaca) a fine-tuning of the base model to obey instructions (akin to the [RLHF](https://huggingface.co/blog/rlhf) used to train ChatGPT) and a set of modifications to [llama.cpp](https://github.com/ggerganov/llama.cpp) to add a chat interface. 
+forked from https://github.com/antimatter15/alpaca.cpp
+
+Changed
+====================
+1. Add Baidu fanyi() to translate from Question, and to Answer, between English & Chinese
+2. Change the Command Line(interactive mode) to use Chinese & English more comfortably.
+3. Add 'exit', 'quit', 'trans', 'notrans' in Command Line to quit or change mode.
 
 ## Get Started (7B)
 
@@ -29,7 +38,11 @@ The weights are based on the published fine-tunes from `alpaca-lora`, converted 
 git clone https://github.com/thinkahead123/alpaca.cpp
 cd alpaca.cpp
 
-# if you use macbook pro M1, cp ./CMakefileLists.MBP_M1.txt ./CMakefileLists.txt
+# if you use macbook pro M1, there are bugs when running ./chat: 
+#  1. cause 'illegal hardware instruction'
+#  2. running speed is very slowly 
+# use the copy firstly to cover old one
+# cp ./CMakeLists.MBP_M1.txt ./CMakeLists.txt
 cmake .
 make chat
 ./chat

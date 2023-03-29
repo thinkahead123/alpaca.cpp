@@ -1089,7 +1089,14 @@ int main(int argc, char ** argv) {
                     if (!buf) n_read = 0;
                     else n_read = strlen(buf);
 
-                    if (!n_read || !strcmp(buf, "exit") || !strcmp(buf, "quit")) {printf("Goodbye!\n"); exit(0);}
+                    if (!n_read) continue;
+                    if (!strcmp(buf, "help")) {
+                        printf("help: this page\n");
+                        printf("exit/quit: quit this interactive CLI\n");
+                        printf("trans/notrans: enter/leave translate mode,which use baidu etc. to translate user's input & gpt's reply in Chinese\n");
+                        continue;
+                    }
+                    if (!strcmp(buf, "exit") || !strcmp(buf, "quit")) {printf("Goodbye!\n"); exit(0);}
                     if (!strcmp(buf, "trans")) {printf("Enter translation mode\n"); params.use_trans = true; continue;}
                     if (!strcmp(buf, "notrans")) {printf("Leave translation mode\n"); params.use_trans = false; continue;}
 
