@@ -7,13 +7,17 @@ The screencast below is not sped up and running on an M1 Macbook Pro  with 8GB o
 
 
 ## Forked From:
-https://github.com/antimatter15/alpaca.cpp:
-====================
-This combines the [LLaMA foundation model](https://github.com/facebookresearch/llama) with an [open reproduction](https://github.com/tloen/alpaca-lora) of [Stanford Alpaca](https://github.com/tatsu-lab/stanford_alpaca) a fine-tuning of the base model to obey instructions (akin to the [RLHF](https://huggingface.co/blog/rlhf) used to train ChatGPT) and a set of modifications to [llama.cpp](https://github.com/ggerganov/llama.cpp) to add a chat interface. 
-forked from https://github.com/antimatter15/alpaca.cpp
+
+This forked from 
+[chat CLI](https://github.com/antimatter15/alpaca.cpp), which combine:
+[LLaMA foundation model](https://github.com/facebookresearch/llama) 
+[open reproduction](https://github.com/tloen/alpaca-lora)
+[Stanford Alpaca](https://github.com/tatsu-lab/stanford_alpaca)
+[RLHF](https://huggingface.co/blog/rlhf)
+[llama.cpp](https://github.com/ggerganov/llama.cpp)
 
 ## Changed 
-====================
+
 1. Add Baidu fanyi() to translate from Question, and to Answer, between English & Chinese
 2. Change the Command Line(interactive mode) to use Chinese & English more comfortably.
 3. Add 'help', 'exit', 'quit', 'trans', 'notrans' etc. in Command Line to quit or change mode.
