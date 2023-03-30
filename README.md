@@ -15,13 +15,16 @@ Changed
 ====================
 1. Add Baidu fanyi() to translate from Question, and to Answer, between English & Chinese
 2. Change the Command Line(interactive mode) to use Chinese & English more comfortably.
-3. Add 'exit', 'quit', 'trans', 'notrans' in Command Line to quit or change mode.
+3. Add 'help', 'exit', 'quit', 'trans', 'notrans' etc. in Command Line to quit or change mode.
 
 ## Get Started (7B)
 
-Download the zip file corresponding to your operating system from the [latest release](https://github.com/antimatter15/alpaca.cpp/releases/latest). On Windows, download `alpaca-win.zip`, on Mac (both Intel or ARM) download `alpaca-mac.zip`, and on Linux (x64) download `alpaca-linux.zip`. 
+Get the appid & secretkey from baidu(http://api.fanyi.baidu.com, Personal for free)
 
-Download `ggml-alpaca-7b-q4.bin` and place it in the same folder as the `chat` executable in the zip file. There are several options: 
+Get the model file:
+
+Download `ggml-alpaca-7b-q4.bin` and place it in the same folder as the `chat`, which can be got from:
+https://huggingface.co/Sosaka/Alpaca-native-4bit-ggml/blob/main/ggml-alpaca-7b-q4.bin 
 
 Once you've downloaded the model weights and placed them into the same directory as the `chat` or `chat.exe` executable, run:
 
@@ -38,11 +41,12 @@ The weights are based on the published fine-tunes from `alpaca-lora`, converted 
 git clone https://github.com/thinkahead123/alpaca.cpp
 cd alpaca.cpp
 
-# if you use macbook pro M1, there are bugs when running ./chat: 
+# if you use macbook pro M1, may be found when running ./chat
 #  1. cause 'illegal hardware instruction'
-#  2. running speed is very slowly 
-# use the copy firstly to cover old one
+#  2. running speed is very slowly
+# there are bugs in compiling,  use the copy firstly to cover old one
 # cp ./CMakeLists.MBP_M1.txt ./CMakeLists.txt
+#
 cmake .
 make chat
 ./chat
@@ -53,7 +57,7 @@ make chat
 
 - Download and install CMake: <https://cmake.org/download/>
 - Download and install `git`. If you've never used git before, consider a GUI client like <https://desktop.github.com/>
-- Clone this repo using your git client of choice (for GitHub Desktop, go to File -> Clone repository -> From URL and paste `https://github.com/antimatter15/alpaca.cpp` in as the URL)
+- Clone this repo using your git client of choice (for GitHub Desktop, go to File -> Clone repository -> From URL and paste `https://github.com/thinkahead123/alpaca.cpp` in as the URL)
 - Open a Windows Terminal inside the folder you cloned the repository to
 - Run the following commands one by one:
 
