@@ -1,7 +1,6 @@
-# Alpaca.cpp (Alpaca-zh, use baidu to translate from/to Chinese)
+# Alpaca.cpp (Alpaca-zh, use baidu fanyi api to translate from/to Chinese)
 
-Run a fast ChatGPT-like model locally on your device. The screencast below is not sped up and running on an M1 Macbook Pro  with 4GB of weights. 
-
+Run a fast ChatGPT-like model locally on your device. use baidu fanyi api to translate from/to Chinese. The screencast below is not sped up and running on an M1 Macbook Pro  with 8GB of weights. 
 
 [![asciicast](screencast.gif)](https://asciinema.org/a/dfJ8QXZ4u978Ona59LPEldtKK)
 
