@@ -1,9 +1,10 @@
-# Alpaca.cpp (Alpaca-zh Chinese)
+# Alpaca.cpp (Alpaca-zh Chinese alpaca的中文支持)
 
 Run a fast ChatGPT-like model locally on your device, use baidu fanyi api to translate from/to Chinese. 
 The screencast below is not sped up and running on an M1 Macbook Pro  with 8GB of weights. 
 
 ========================================
+
 利用百度翻译api，提供alpaca的中文支持，仅供参考。(注意百度api在50000字/月之后会收取费用)
 
 [Video](https://asciinema.org/a/9LB9oUH3U1qaPKNEofrMDkqZp)
