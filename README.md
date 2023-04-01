@@ -2,6 +2,10 @@
 
 Run a fast ChatGPT-like model locally on your device, use baidu fanyi api to translate from/to Chinese. 
 The screencast below is not sped up and running on an M1 Macbook Pro  with 8GB of weights. 
+
+========================================
+利用百度翻译api，提供alpaca的中文支持，仅供参考。(注意百度api在50000字/月之后会收取费用)
+
 [Video](https://asciinema.org/a/9LB9oUH3U1qaPKNEofrMDkqZp)
 
 [![asciicast](https://asciinema.org/a/9LB9oUH3U1qaPKNEofrMDkqZp.png)](https://asciinema.org/a/9LB9oUH3U1qaPKNEofrMDkqZp)
@@ -20,6 +24,11 @@ This forked from
 1. Add Baidu fanyi() to translate from Question, and to Answer, between English & Chinese
 2. Change the Command Line(interactive mode) to use Chinese & English more comfortably.
 3. Add 'help', 'exit', 'quit', 'trans', 'notrans' etc. in Command Line to quit or change mode.
+
+======================
+1. 增加了百度翻译进行中文化
+2. 修改了命令行，使用起来更加方便舒服
+3. 增加命令，便于进行切换和退出
 
 ## Get Started (7B)
 
