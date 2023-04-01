@@ -4,7 +4,7 @@ Run a fast ChatGPT-like model locally on your device, use baidu fanyi api to tra
 The screencast below is not sped up and running on an M1 Macbook Pro  with 8GB of weights. 
 [Video](https://asciinema.org/a/9LB9oUH3U1qaPKNEofrMDkqZp)
 
-
+[![asciicast](https://asciinema.org/a/9LB9oUH3U1qaPKNEofrMDkqZp.png)](https://asciinema.org/a/9LB9oUH3U1qaPKNEofrMDkqZp)
 ## Forked From:
 
 This forked from 
