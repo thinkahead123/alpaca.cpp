@@ -2,6 +2,8 @@
 
 Run a fast ChatGPT-like model locally on your device, use baidu fanyi api to translate from/to Chinese. 
 The screencast below is not sped up and running on an M1 Macbook Pro  with 8GB of weights. 
+[Video](https://asciinema.org/a/9LB9oUH3U1qaPKNEofrMDkqZp)
+
 
 [![asciicast](screencast.gif)](https://asciinema.org/a/9LB9oUH3U1qaPKNEofrMDkqZp)
 
